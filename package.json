@@ -1,0 +1,19 @@
+{
+  "name": "rethinkdbfs",
+  "version": "0.0.0",
+  "description": "A file storage system for RethinkDB inspired by GridFS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/internalfx/rethinkdbfs.git"
+  },
+  "author": "Bryan Morris",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/internalfx/rethinkdbfs/issues"
+  },
+  "homepage": "https://github.com/internalfx/rethinkdbfs#readme"
+}
