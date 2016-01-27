@@ -1,6 +1,8 @@
 # RethinkDBFS
 A file storage system for RethinkDB inspired by GridFS
 
+The spec is being discussed on the RethinkDB slack channel. There may be breaking changes.
+
 [![npm version](https://img.shields.io/npm/v/rethinkdbfs.svg)](https://www.npmjs.com/package/rethinkdbfs)
 [![license](https://img.shields.io/npm/l/rethinkdbfs.svg)](https://github.com/internalfx/rethinkdbfs/blob/master/LICENSE)
 
@@ -15,8 +17,6 @@ Arthur Andrew Medical manufactures products with ingredients that have extensive
 ## Installation
 
 Supports node v4.0+
-
-The spec is being discussed on the RethinkDB slack channel. There may be breaking changes.
 
 ```
 npm install rethinkdbfs
