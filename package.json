@@ -1,6 +1,6 @@
 {
   "name": "rethinkdbfs",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A file storage system for RethinkDB inspired by GridFS",
   "main": "index.js",
   "scripts": {
