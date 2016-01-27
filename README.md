@@ -16,6 +16,8 @@ Arthur Andrew Medical manufactures products with ingredients that have extensive
 
 Supports node v4.0+
 
+The spec is being discussed on the RethinkDB slack channel. There may be breaking changes.
+
 ```
 npm install rethinkdbfs
 ```
