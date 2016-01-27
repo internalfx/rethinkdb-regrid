@@ -32,7 +32,7 @@ dbfs.prepDB().then(function () {
   // create read stream from file
   var fileStream = fs.createReadStream('./bigvid.mp4')
 
-  // Pipe it to a dbfs write stream
+  // Pipe it to a RethinkDBFS write stream
   fileStream.pipe(dbfs.writeFile({filename: '/videos/bigvid.mp4'}))
 
   // Listen for 'end' to know when the file is written to the database
