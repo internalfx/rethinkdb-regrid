@@ -35,7 +35,6 @@ dbfs.prepDB().then(function () {
   // Pipe it to a RethinkDBFS write stream
   fileStream.pipe(dbfs.writeFile({filename: '/videos/bigvid.mp4'}))
 
-  // Listen for 'end' to know when the file is written to the database
   fileStream.on('end', function () {
     // File is now written to the database
 
