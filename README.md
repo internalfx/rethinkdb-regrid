@@ -1,7 +1,7 @@
 # RethinkDBFS
 A file storage system for RethinkDB inspired by GridFS
 
-The spec is being discussed on the RethinkDB slack channel. There may be breaking changes.
+The [RethinkDBFS spec](https://github.com/internalfx/rethinkdbfs-spec) is being discussed on the RethinkDB slack channel. There **WILL** be breaking changes.
 
 [![npm version](https://img.shields.io/npm/v/rethinkdbfs.svg)](https://www.npmjs.com/package/rethinkdbfs)
 [![license](https://img.shields.io/npm/l/rethinkdbfs.svg)](https://github.com/internalfx/rethinkdbfs/blob/master/LICENSE)
