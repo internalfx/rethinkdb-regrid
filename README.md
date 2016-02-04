@@ -1,10 +1,10 @@
-# RethinkDBFS
+# ReGrid
 A file storage system for RethinkDB inspired by GridFS
 
-The [RethinkDBFS spec](https://github.com/internalfx/rethinkdbfs-spec) is being discussed on the RethinkDB slack channel. There **WILL** be breaking changes.
+The [ReGrid spec](https://github.com/internalfx/regrid-spec) is being discussed on the RethinkDB slack channel. There **WILL** be breaking changes.
 
-[![npm version](https://img.shields.io/npm/v/rethinkdbfs.svg)](https://www.npmjs.com/package/rethinkdbfs)
-[![license](https://img.shields.io/npm/l/rethinkdbfs.svg)](https://github.com/internalfx/rethinkdbfs/blob/master/LICENSE)
+<!-- [![npm version](https://img.shields.io/npm/v/rethinkdbfs.svg)](https://www.npmjs.com/package/rethinkdbfs) -->
+<!-- [![license](https://img.shields.io/npm/l/rethinkdbfs.svg)](https://github.com/internalfx/rethinkdbfs/blob/master/LICENSE) -->
 
 ---
 
@@ -18,16 +18,14 @@ Arthur Andrew Medical manufactures products with ingredients that have extensive
 
 Supports node v4.0+
 
-```
-npm install rethinkdbfs
-```
+Currently in the process of asking the existing owner of regrid on npm for permission to use the package name. `npm install` coming soon!
 
 ## Getting Started
 
 ```javascript
-var RethinkDBFS = require('rethinkdbfs')
+var ReGrid = require('regrid')
 
-var dbfs = RethinkDBFS({db: 'example'})
+var dbfs = ReGrid({db: 'example'})
 
 // prepDB creates tables and indexes if they don't exist, returns a promise.
 dbfs.prepDB().then(function () {

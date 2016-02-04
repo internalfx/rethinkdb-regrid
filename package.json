@@ -1,5 +1,5 @@
 {
-  "name": "rethinkdbfs",
+  "name": "regrid",
   "version": "0.1.0",
   "description": "A file storage system for RethinkDB inspired by GridFS",
   "main": "index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/internalfx/rethinkdbfs.git"
+    "url": "git+https://github.com/internalfx/regrid.git"
   },
   "author": "Bryan Morris",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/internalfx/rethinkdbfs/issues"
+    "url": "https://github.com/internalfx/regrid/issues"
   },
-  "homepage": "https://github.com/internalfx/rethinkdbfs#readme",
+  "homepage": "https://github.com/internalfx/regrid#readme",
   "dependencies": {
     "bluebird": "^3.1.5",
     "co": "^4.6.0",
