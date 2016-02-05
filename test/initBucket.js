@@ -14,7 +14,7 @@ var fs = require('fs')
 var co = require('co')
 var Promise = require('bluebird')
 
-var r = require('rethinkdbdash')({db: 'test'})
+var r = require('rethinkdbdash')({db: 'test', silent: true})
 
 describe('initBucket', function () {
   before(function () {
