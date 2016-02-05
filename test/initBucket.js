@@ -91,14 +91,4 @@ describe('initBucket', function () {
       })
     })
   })
-
-  after(function () {
-    return co(function *() {
-      var tables = yield r.tableList()
-      var queries = tables.map(function (table) {
-        return r.tableDrop(table).run()
-      })
-      yield Promise.all(queries)
-    })
-  })
 })
