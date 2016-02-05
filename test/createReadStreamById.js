@@ -9,6 +9,7 @@
 
 var streamPromise = function (stream) {
   return new Promise(function (resolve, reject) {
+    stream.on('end', resolve)
     stream.on('finish', resolve)
     stream.on('error', reject)
   })
@@ -17,6 +18,8 @@ var streamPromise = function (stream) {
 var Promise = require('bluebird')
 var assert = require('chai').assert
 
+var crypto = require('crypto')
+var del = require('del')
 var path = require('path')
 var ReGrid = require('../index')
 var fs = Promise.promisifyAll(require('fs'))
@@ -53,18 +56,30 @@ describe('createReadStreamById', function () {
     })
   })
 
-  it('should read a file correctly', function (done) {
-    var writeStream = dbfs.createWriteStream('/docs/lipsum.txt')
+  it('should read a file correctly', function () {
+    return co(function *() {
+      var regridFile = yield r.table('fs_files').filter({filename: '/images/saturnV.jpg'}).nth(0).run()
 
-    fs.createReadStream(path.join(__dirname, 'files', 'lipsum.txt')).pipe(writeStream)
+      var gridStream = dbfs.createReadStreamById(regridFile.id)
+      var fileStream = fs.createReadStream('./test/files/saturnV.jpg')
 
-    writeStream.on('finish', function () {
-      r.table('fs_files').filter({filename: '/docs/lipsum.txt'}).nth(0).without('finishedAt', 'startedAt', 'id').default(null).run().then(function (file) {
-        file = JSON.stringify(file)
-        assert.equal(file, `{"chunkSizeBytes":261120,"filename":"/docs/lipsum.txt","length":1417,"sha256":"1748f5745c3ef44ba4e1f212069f6e90e29d61bdd320a48c0b06e1255864ed4f","status":"Complete"}`)
-        done()
+      var tasks = [streamPromise(gridStream), streamPromise(fileStream)]
+      var gridHash = crypto.createHash('sha256')
+      var fileHash = crypto.createHash('sha256')
+
+      gridStream.on('data', function (data) {
+        gridHash.update(data)
       })
+
+      fileStream.on('data', function (data) {
+        fileHash.update(data)
+      })
+
+      yield Promise.all(tasks)
+
+      assert.equal(fileHash.digest('hex'), gridHash.digest('hex'))
+
+      yield del('./testfile')
     })
   })
-
 })
