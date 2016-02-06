@@ -24,7 +24,7 @@ npm install --save rethinkdb-regrid
 ## TL;DR
 
 ```javascript
-var ReGrid = require('regrid')
+var ReGrid = require('rethinkdb-regrid')
 
 var dbfs = ReGrid({db: 'example'})
 
