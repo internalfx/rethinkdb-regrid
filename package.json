@@ -4,7 +4,7 @@
   "description": "A file storage system for RethinkDB inspired by GridFS",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha test.js"
   },
   "repository": {
     "type": "git",
