@@ -7,14 +7,7 @@
 /* global after */
 /* global afterEach */
 
-var streamPromise = function (stream) {
-  return new Promise(function (resolve, reject) {
-    stream.on('end', resolve)
-    stream.on('finish', resolve)
-    stream.on('error', reject)
-  })
-}
-
+var streamPromise = require('../lib/RGUtils').streamPromise
 var Promise = require('bluebird')
 var assert = require('chai').assert
 
