@@ -1,7 +1,14 @@
 # ReGrid
-A file storage system for RethinkDB inspired by GridFS
 
-The [ReGrid spec](https://github.com/internalfx/regrid-spec) is being discussed on the RethinkDB slack channel. There **WILL** be breaking changes.
+ReGrid is a method of storing large files inside a RethinkDB database.
+
+### Features
+
+- **Reliable** - Files are replicated across the cluster, benefiting from RethinkDB's automatic failover.
+- **Scalable** - Easily store large files in RethinkDB, distributed across the cluster.
+- **Consistent** - Sha256 hashes are calculated when the file is written, and verified when read back out.
+
+The [ReGrid spec](https://github.com/internalfx/regrid-spec) is being discussed on the RethinkDB slack channel. There **MAY** be breaking changes.
 
 [![npm version](https://img.shields.io/npm/v/rethinkdb-regrid.svg)](https://www.npmjs.com/package/rethinkdb-regrid) [![license](https://img.shields.io/npm/l/rethinkdb-regrid.svg)](https://github.com/internalfx/regrid/blob/master/LICENSE)
 
