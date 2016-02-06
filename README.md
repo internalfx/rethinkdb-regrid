@@ -3,8 +3,7 @@ A file storage system for RethinkDB inspired by GridFS
 
 The [ReGrid spec](https://github.com/internalfx/regrid-spec) is being discussed on the RethinkDB slack channel. There **WILL** be breaking changes.
 
-<!-- [![npm version](https://img.shields.io/npm/v/rethinkdbfs.svg)](https://www.npmjs.com/package/rethinkdbfs) -->
-<!-- [![license](https://img.shields.io/npm/l/rethinkdbfs.svg)](https://github.com/internalfx/rethinkdbfs/blob/master/LICENSE) -->
+[![npm version](https://img.shields.io/npm/v/rethinkdb-regrid.svg)](https://www.npmjs.com/package/rethinkdb-regrid) [![license](https://img.shields.io/npm/l/rethinkdb-regrid.svg)](https://github.com/internalfx/regrid/blob/master/LICENSE)
 
 ---
 
@@ -26,7 +25,7 @@ Update: 2016-02-05 - Owner of `regrid` was unwilling to let go of name ([issue#1
 npm install --save rethinkdb-regrid
 ```
 
-## Getting Started
+## TL;DR
 
 ```javascript
 var ReGrid = require('regrid')
@@ -34,22 +33,22 @@ var ReGrid = require('regrid')
 var dbfs = ReGrid({db: 'example'})
 
 // prepDB creates tables and indexes if they don't exist, returns a promise.
-dbfs.prepDB().then(function () {
+dbfs.initBucket().then(function () {
   // We are now ready to read and write files
 
   // create read stream from file
   var fileStream = fs.createReadStream('./bigvid.mp4')
+  var dbStream = dbfs.createWriteStream('/videos/bigvid.mp4')
 
   // Pipe it to a RethinkDBFS write stream
-  fileStream.pipe(dbfs.writeFile({filename: '/videos/bigvid.mp4'}))
+  fileStream.pipe(dbStream)
 
-  fileStream.on('end', function () {
+  dbStream.on('finish', function () {
     // File is now written to the database
 
     //Read the file and pipe it to a write stream to save the file back out to the file system.
-    dbfs.readFile({filename: '/videos/bigvid.mp4'}).pipe(fs.createWriteStream('./test-bigvid.mp4'))
+    dbfs.createReadStreamByFilename('/videos/bigvid.mp4').pipe(fs.createWriteStream('./copy-of-bigvid.mp4'))
   })
 
 })
-
 ```
