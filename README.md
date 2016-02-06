@@ -28,7 +28,7 @@ var ReGrid = require('rethinkdb-regrid')
 
 var dbfs = ReGrid({db: 'example'})
 
-// prepDB creates tables and indexes if they don't exist, returns a promise.
+// initBucket creates tables and indexes if they don't exist, returns a promise.
 dbfs.initBucket().then(function () {
   // We are now ready to read and write files
 
@@ -36,7 +36,7 @@ dbfs.initBucket().then(function () {
   var fileStream = fs.createReadStream('./bigvid.mp4')
   var dbStream = dbfs.createWriteStream('/videos/bigvid.mp4')
 
-  // Pipe it to a RethinkDBFS write stream
+  // Pipe it to a ReGrid write stream
   fileStream.pipe(dbStream)
 
   dbStream.on('finish', function () {
