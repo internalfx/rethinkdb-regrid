@@ -62,7 +62,7 @@ connectionOptions is passed directly to [rethinkdbdash](https://github.com/neumi
 ###### `bucketOptions`
 
 | key | default | type | description |
-|---|---|---|
+|---|---|---|---|
 | bucketName | `fs` | String | The name of the bucket. Table names are prefixed by this. |
 | chunkSizeBytes | `1024 * 255` | Number | The default chunk size, in bytes. |
 | concurrency | `10` | Number | When reading/writing a file, the number of concurrent queries in flight for a given stream. |
