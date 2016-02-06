@@ -72,5 +72,5 @@ connectionOptions is passed directly to [rethinkdbdash](https://github.com/neumi
 ```javascript
 var ReGrid = require('rethinkdb-regrid')
 
-var bucket = ReGrid(connectionOptions, bucketOptions)
+var bucket = ReGrid({db: 'mydatabase'}, {bucketName: 'mybucket'})
 ```
