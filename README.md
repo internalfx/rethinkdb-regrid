@@ -20,6 +20,12 @@ Supports node v4.0+
 
 Currently in the process of asking the existing owner of regrid on npm for permission to use the package name. `npm install` coming soon!
 
+Update: 2016-02-05 - Owner of `regrid` was unwilling to let go of name ([issue#1](https://github.com/ccampo133/regrid/issues/1))
+
+```
+npm install --save rethinkdb-regrid
+```
+
 ## Getting Started
 
 ```javascript
