@@ -33,15 +33,15 @@ npm install --save rethinkdb-regrid
 ```javascript
 var ReGrid = require('rethinkdb-regrid')
 
-var dbfs = ReGrid({db: 'example'})
+var bucket = ReGrid({db: 'example'})
 
 // initBucket creates tables and indexes if they don't exist, returns a promise.
-dbfs.initBucket().then(function () {
+bucket.initBucket().then(function () {
   // We are now ready to read and write files
 
   // create read stream from file
   var fileStream = fs.createReadStream('./bigvid.mp4')
-  var dbStream = dbfs.createWriteStream('/videos/bigvid.mp4')
+  var dbStream = bucket.createWriteStream('/videos/bigvid.mp4')
 
   // Pipe it to a ReGrid write stream
   fileStream.pipe(dbStream)
@@ -50,7 +50,7 @@ dbfs.initBucket().then(function () {
     // File is now written to the database
 
     //Read the file and pipe it to a write stream to save the file back out to the file system.
-    dbfs.createReadStreamByFilename('/videos/bigvid.mp4').pipe(fs.createWriteStream('./copy-of-bigvid.mp4'))
+    bucket.createReadStreamByFilename('/videos/bigvid.mp4').pipe(fs.createWriteStream('./copy-of-bigvid.mp4'))
   })
 
 })
