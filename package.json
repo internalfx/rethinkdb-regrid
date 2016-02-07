@@ -20,7 +20,8 @@
     "bluebird": "^3.1.5",
     "co": "^4.6.0",
     "flushwritable": "^1.0.0",
-    "rethinkdbdash": "^2.2.15"
+    "rethinkdbdash": "^2.2.15",
+    "stream-to-array": "^2.2.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
