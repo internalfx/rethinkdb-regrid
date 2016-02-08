@@ -133,13 +133,13 @@ bucket.initBucket().then(function () {
 
 ---
 
-### `set(filename, [options])`
+### `set(filename[, options])`
 
 ##### Parameters
 
 | key | default | type | description |
 | --- | --- | --- | --- |
-| filename | *required* | String | The name that the stored file will be indexed under. |
+| filename | *required* | String | The name of the file. |
 | options | {} | Object |  Optional parameters listed below |
 
 ###### Options
@@ -170,7 +170,6 @@ writeStream.on('finish', function () {
 })
 
 fs.createReadStream('./myVid.mp4').pipe(writeStream)
-
 ```
 
 ---
@@ -197,5 +196,53 @@ Returns a read stream for reading a file from ReGrid.
 var readStream = bucket.getId('ca608825-15c0-44b5-9bef-3ccabf061bab')
 
 readStream.pipe(fs.createWriteStream('./mySavedVideo.mp4'))
+```
 
+---
+
+### `getFilename(filename[, options])`
+
+##### Parameters
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| filename | *required* | String | The name of the file. |
+| options | {} | Object |  Optional parameters listed below |
+
+###### Options
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| revision | `-1` | Number | The revision of the file to retrieve. If multiple files are uploaded under the same `filename` they are considered revisions. This may be a positive or negative number. (see chart below) |
+
+###### How revision numbers work
+
+If there are five versions of a file, the below chart would be the revision numbers
+
+| Number | Description |
+| --- | --- |
+| `0` or `-5` | The original file |
+| `1` or `-4` | The first revision |
+| `2` or `-3` | The second revision |
+| `3` or `-2` | The second most recent revision |
+| `4` or `-1` | The most recent revision |
+
+##### returns
+
+ReadStream
+
+##### Description
+
+Returns a read stream for reading a file from ReGrid.
+
+##### Example
+
+```javascript
+var newestVersion = bucket.getFilename('/videos/myVid.mp4')
+
+var originalVersion = bucket.getFilename('/videos/myVid.mp4', {revision: 0})
+
+newestVersion.pipe(fs.createWriteStream('./latest.mp4'))
+
+originalVersion.pipe(fs.createWriteStream('./original.mp4'))
 ```
