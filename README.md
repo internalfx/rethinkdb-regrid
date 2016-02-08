@@ -272,7 +272,9 @@ ReadStream in `objectMode`. The stream emits objects, not buffers.
 
 ##### Description
 
-Returns a read stream for finding files via regular expression. The stream emits objects as they are found, this can be a long running operation. You may optionally call `toArray()` on the returned stream to coerce it to an array. This can fail if the result set is very large. You may optionally call with limit to prevent this.
+Returns a read stream for finding files via regular expression. The stream emits objects as they are found, and can be a long running operation.
+
+You may optionally call `toArray()` on the returned stream to coerce it to an array. This may fail if the result set is very large. You may optionally call with limit to prevent this.
 
 ##### Example
 
@@ -308,7 +310,9 @@ ReadStream in `objectMode`. The stream emits objects, not buffers.
 
 ##### Description
 
-Returns a read stream for finding files by filename. The stream emits objects as they are found, this can be a long running operation. You may optionally call `toArray()` on the returned stream to coerce it to an array. This can fail if the result set is very large. You may optionally call with limit to prevent this. This method uses an index and is very efficient.
+Returns a read stream for finding files by filename. The stream emits objects as they are found, and can be a long running operation. However, this method uses an index and is very efficient.
+
+You may optionally call `toArray()` on the returned stream to coerce it to an array. This may fail if the result set is very large. You may optionally call with limit to prevent this.
 
 ##### Example
 
