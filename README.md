@@ -155,7 +155,7 @@ WriteStream
 
 ##### Description
 
-Returns a new write stream for storing a file in ReGrid.
+Returns a write stream for storing a file in ReGrid.
 
 ##### Example
 
@@ -170,5 +170,32 @@ writeStream.on('finish', function () {
 })
 
 fs.createReadStream('./myVid.mp4').pipe(writeStream)
+
+```
+
+---
+
+### `getId(fileId)`
+
+##### Parameters
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| fileId | *required* | String | The `id` of the file to retrieve |
+
+##### returns
+
+ReadStream
+
+##### Description
+
+Returns a read stream for reading a file from ReGrid.
+
+##### Example
+
+```javascript
+var readStream = bucket.getId('ca608825-15c0-44b5-9bef-3ccabf061bab')
+
+readStream.pipe(fs.createWriteStream('./mySavedVideo.mp4'))
 
 ```
