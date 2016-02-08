@@ -7,7 +7,7 @@ ReGrid is a method of storing large files inside a RethinkDB database.
 - **Reliable** - Files are replicated across the cluster, benefiting from RethinkDB's automatic failover.
 - **Scalable** - Easily store large files in RethinkDB, distributed across the cluster.
 - **Consistent** - Sha256 hashes are calculated when the file is written, and verified when read back out.
-- **Realtime** - Watch any file for changes and be notified immediately.
+- **Realtime** - Watch the filesystem for changes and be notified immediately.
 
 The [ReGrid spec](https://github.com/internalfx/regrid-spec) is an open specification free for anyone to implement and use.
 
@@ -40,12 +40,16 @@ var bucket = ReGrid({db: 'example'})
 bucket.initBucket().then(function () {
   // We are now ready to read and write files
 
-  // create read stream from file
-  var fileStream = fs.createReadStream('./bigvid.mp4')
+  // Watch a filename for changes
+  bucket.watchFilename('/videos/bigvid.mp4', function (err, change) {
+    console.log(change)
+  })
+
+  // Open a write stream to ReGrid
   var dbStream = bucket.set('/videos/bigvid.mp4')
 
-  // Pipe it to a ReGrid write stream
-  fileStream.pipe(dbStream)
+  // Create read stream from file and pipe it to a ReGrid write stream
+  fs.createReadStream('./bigvid.mp4').pipe(dbStream)
 
   dbStream.on('finish', function () {
     // File is now written to the database
