@@ -279,6 +279,13 @@ You may optionally call `toArray()` on the returned stream to coerce it to an ar
 ##### Example
 
 ```javascript
+var videoStream = bucket.listRegex('^/videos/', {limit: 100})
+
+videoStream.on('data', function (video) {
+  console.log(video)
+})
+
+// OR
 bucket.listRegex('^/videos/', {limit: 100}).toArray().then(function (videos) {
   // list the first 100 videos in the `/videos` directory
   console.log(videos)
@@ -317,8 +324,59 @@ You may optionally call `toArray()` on the returned stream to coerce it to an ar
 ##### Example
 
 ```javascript
+var revisionStream = bucket.listFilename('/videos/editedVideo.mp4')
+
+revisionStream.on('data', function (revision) {
+  console.log(revision)
+})
+
+// OR
 bucket.listFilename('/videos/editedVideo.mp4').toArray().then(function (revisions) {
   // list all revisions of '/videos/editedVideo.mp4'
   console.log(revisions)
+})
+```
+
+---
+
+### `listMetadata(metadata[, options])`
+
+##### Parameters
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| metadata | *required* | Object | An object to match against the `metadata` field of ReGrid files. |
+| options | {} | Object |  Optional parameters listed below |
+
+###### Options
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| skip | undefined | Number | Skip results, useful for pagination. |
+| limit | undefined | Number | Limit results. |
+
+##### returns
+
+ReadStream in `objectMode`. The stream emits objects, not buffers.
+
+##### Description
+
+Returns a read stream for finding files by metadata. The stream emits objects as they are found, and can be a long running operation.
+
+You may optionally call `toArray()` on the returned stream to coerce it to an array. This may fail if the result set is very large. You may optionally call with limit to prevent this.
+
+##### Example
+
+```javascript
+var catStream = bucket.listMetadata({topic: 'cats'})
+
+catStream.on('data', function (catVideo) {
+  console.log(catVideo)
+})
+
+// OR
+bucket.listMetadata({topic: 'cats'}).toArray().then(function (catVideos) {
+  // list all videos under the 'cat' topic.
+  console.log(catVideos)
 })
 ```
