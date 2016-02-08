@@ -72,13 +72,18 @@ There are mostly 4 types of operations that can be performed in ReGrid. Most met
 | list | Lists available files in ReGrid. This function will return a read stream in `objectMode`. |
 | watch | Watches files for changes in ReGrid. This function will return a [changeFeed](https://www.rethinkdb.com/api/javascript/changes/). |
 
-### `ReGrid([connectionOptions, bucketOptions])`
+---
+
+### `ReGrid([connectionOptions, options])`
 
 ##### Parameters
 
- - `connectionOptions`: connectionOptions is passed directly to [rethinkdbdash](https://github.com/neumino/rethinkdbdash)
+| key | default | type | description |
+| --- | --- | --- | --- |
+| connectionOptions | {}| Object | `connectionOptions` is passed directly to [rethinkdbdash](https://github.com/neumino/rethinkdbdash) |
+| options | {} | Object |  Optional parameters listed below |
 
- - `bucketOptions`:
+###### Options
 
 | key | default | type | description |
 |---|---|---|---|
@@ -124,4 +129,46 @@ Verifies required tables and indexes exist and will create them if missing.
 bucket.initBucket().then(function () {
   // bucket is ready for use.....
 })
+```
+
+---
+
+### `set(filename, [options])`
+
+##### Parameters
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| filename | *required* | String | The name that the stored file will be indexed under. |
+| options | {} | Object |  Optional parameters listed below |
+
+###### Options
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| chunkSizeBytes | The `chunkSizeBytes` setting for the bucket. | Number | Size of each chunk in bytes. |
+| metadata | undefined | Object | Metadata object allowing you to store custom keys on files. |
+
+##### returns
+
+WriteStream
+
+##### Description
+
+Returns a new write stream for storing a file in ReGrid.
+
+##### Example
+
+```javascript
+var writeStream = bucket.set('/videos/myVid.mp4', {
+  chunkSizeBytes: 1024 * 255,
+  metadata: {topic: 'cats'}
+})
+
+fs.createReadStream('./myVid.mp4').pipe(writeStream)
+
+writeStream.on('finish', function () {
+  // File is now stored in ReGrid
+})
+
 ```
