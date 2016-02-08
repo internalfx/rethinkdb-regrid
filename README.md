@@ -277,11 +277,44 @@ Returns a read stream for finding files via regular expression. The stream emits
 ##### Example
 
 ```javascript
-var newestVersion = bucket.getFilename('/videos/myVid.mp4')
+bucket.listRegex('^/videos/', {limit: 100}).toArray().then(function (videos) {
+  // list the first 100 videos in the `/videos` directory
+  console.log(videos)
+})
+```
 
-var originalVersion = bucket.getFilename('/videos/myVid.mp4', {revision: 0})
+---
 
-newestVersion.pipe(fs.createWriteStream('./latest.mp4'))
+### `listFilename(filename[, options])`
 
-originalVersion.pipe(fs.createWriteStream('./original.mp4'))
+##### Parameters
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| filename | *required* | String | The name of the file. |
+| options | {} | Object |  Optional parameters listed below |
+
+###### Options
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| sort | undefined | String | Sort results by `finishedAt` (The date the file was uploaded). Valid values are `ASC` and `DESC`. |
+| skip | undefined | Number | Skip results, useful for pagination. |
+| limit | undefined | Number | Limit results. |
+
+##### returns
+
+ReadStream in `objectMode`. The stream emits objects, not buffers.
+
+##### Description
+
+Returns a read stream for finding files by filename. The stream emits objects as they are found, this can be a long running operation. You may optionally call `toArray()` on the returned stream to coerce it to an array. This can fail if the result set is very large. You may optionally call with limit to prevent this. This method uses an index and is very efficient.
+
+##### Example
+
+```javascript
+bucket.listFilename('/videos/editedVideo.mp4').toArray().then(function (revisions) {
+  // list all revisions of '/videos/editedVideo.mp4'
+  console.log(revisions)
+})
 ```
