@@ -41,7 +41,7 @@ bucket.initBucket().then(function () {
 
   // create read stream from file
   var fileStream = fs.createReadStream('./bigvid.mp4')
-  var dbStream = bucket.createWriteStream('/videos/bigvid.mp4')
+  var dbStream = bucket.set('/videos/bigvid.mp4')
 
   // Pipe it to a ReGrid write stream
   fileStream.pipe(dbStream)
@@ -50,7 +50,7 @@ bucket.initBucket().then(function () {
     // File is now written to the database
 
     //Read the file and pipe it to a write stream to save the file back out to the file system.
-    bucket.createReadStreamByFilename('/videos/bigvid.mp4').pipe(fs.createWriteStream('./copy-of-bigvid.mp4'))
+    bucket.getFilename('/videos/bigvid.mp4').pipe(fs.createWriteStream('./copy-of-bigvid.mp4'))
   })
 
 })
@@ -58,15 +58,22 @@ bucket.initBucket().then(function () {
 
 ## API Documentation
 
+There are mostly 4 types of operations that can be performed in ReGrid. Most method names start with a prefix that organizes the API.
+
+| Prefix | Description |
+| --- | --- |
+| set | Writes a file to ReGrid. This function will return a binary write stream. |
+| get | Reads a file from ReGrid. This function will return a binary read stream. |
+| list | Lists available files in ReGrid. This function will return a read stream in `objectMode`. |
+| watch | Watches files for changes in ReGrid. This function will return a changeFeed. |
+
 ### `ReGrid([connectionOptions, bucketOptions])`
 
-##### Arguments
+##### Parameters
 
-###### `connectionOptions`
+ - `connectionOptions`: connectionOptions is passed directly to [rethinkdbdash](https://github.com/neumino/rethinkdbdash)
 
-connectionOptions is passed directly to [rethinkdbdash](https://github.com/neumino/rethinkdbdash)
-
-###### `bucketOptions`
+ - `bucketOptions`:
 
 | key | default | type | description |
 |---|---|---|---|
@@ -74,7 +81,11 @@ connectionOptions is passed directly to [rethinkdbdash](https://github.com/neumi
 | chunkSizeBytes | `1024 * 255` | Number | The default chunk size, in bytes. |
 | concurrency | `10` | Number | When reading/writing a file, the number of concurrent queries in flight for a given stream. |
 
-### Example
+##### returns
+
+`Bucket instance`
+
+##### Example
 
 ```javascript
 var ReGrid = require('rethinkdb-regrid')
