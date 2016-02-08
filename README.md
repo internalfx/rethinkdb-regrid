@@ -90,10 +90,38 @@ There are mostly 4 types of operations that can be performed in ReGrid. Most met
 
 `Bucket instance`
 
+##### Description
+
+Creates a new ReGrid bucket instance.
+
 ##### Example
 
 ```javascript
 var ReGrid = require('rethinkdb-regrid')
 
 var bucket = ReGrid({db: 'mydatabase'}, {bucketName: 'mybucket'})
+```
+
+---
+
+### `initBucket()`
+
+##### Parameters
+
+none
+
+##### returns
+
+Promise
+
+##### Description
+
+Verifies required tables and indexes exist and will create them if missing.
+
+##### Example
+
+```javascript
+bucket.initBucket().then(function () {
+  // bucket is ready for use.....
+})
 ```
