@@ -70,7 +70,7 @@ There are mostly 4 types of operations that can be performed in ReGrid. Most met
 | set | Writes a file to ReGrid. This function will return a binary write stream. |
 | get | Reads a file from ReGrid. This function will return a binary read stream. |
 | list | Lists available files in ReGrid. This function will return a read stream in `objectMode`. |
-| watch | Watches files for changes in ReGrid. This function will return a changeFeed. |
+| watch | Watches files for changes in ReGrid. This function will return a [changeFeed](https://www.rethinkdb.com/api/javascript/changes/). |
 
 ### `ReGrid([connectionOptions, bucketOptions])`
 
