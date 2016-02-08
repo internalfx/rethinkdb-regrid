@@ -246,3 +246,42 @@ newestVersion.pipe(fs.createWriteStream('./latest.mp4'))
 
 originalVersion.pipe(fs.createWriteStream('./original.mp4'))
 ```
+
+---
+
+### `listRegex(pattern[, options])`
+
+##### Parameters
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| pattern | *required* | String | A regular expression matched against `filename` |
+| options | {} | Object |  Optional parameters listed below |
+
+###### Options
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| sort | undefined | String | Sort results by `filename`. Valid values are `ASC` and `DESC`. |
+| skip | undefined | Number | Skip results, useful for pagination. |
+| limit | undefined | Number | Limit results. |
+
+##### returns
+
+ReadStream in `objectMode`. The stream emits objects, not buffers.
+
+##### Description
+
+Returns a read stream for finding files via regular expression. The stream emits objects as they are found, this can be a long running operation. You may optionally call `toArray()` on the returned stream to coerce it to an array. This can fail if the result set is very large. You may optionally call with limit to prevent this.
+
+##### Example
+
+```javascript
+var newestVersion = bucket.getFilename('/videos/myVid.mp4')
+
+var originalVersion = bucket.getFilename('/videos/myVid.mp4', {revision: 0})
+
+newestVersion.pipe(fs.createWriteStream('./latest.mp4'))
+
+originalVersion.pipe(fs.createWriteStream('./original.mp4'))
+```
