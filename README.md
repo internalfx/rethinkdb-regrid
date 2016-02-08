@@ -165,10 +165,10 @@ var writeStream = bucket.set('/videos/myVid.mp4', {
   metadata: {topic: 'cats'}
 })
 
-fs.createReadStream('./myVid.mp4').pipe(writeStream)
-
 writeStream.on('finish', function () {
   // File is now stored in ReGrid
 })
+
+fs.createReadStream('./myVid.mp4').pipe(writeStream)
 
 ```
