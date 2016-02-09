@@ -475,7 +475,7 @@ bucket.watchMetadata({topic: 'cats'}).then(function (cursor) {
 
 | key | default | type | description |
 | --- | --- | --- | --- |
-| fileId | *required* | String | The `id` of the file to retrieve |
+| fileId | *required* | String | The `id` of the file to delete |
 
 ##### returns
 
@@ -493,13 +493,13 @@ bucket.delete('ca608825-15c0-44b5-9bef-3ccabf061bab')
 
 ---
 
-### `rename(file_id, filename)`
+### `rename(fileId, filename)`
 
 ##### Parameters
 
 | key | default | type | description |
 | --- | --- | --- | --- |
-| fileId | *required* | String | The `id` of the file to retrieve. |
+| fileId | *required* | String | The `id` of the file to rename. |
 | filename | *required* | String | The new filename for the selected file. |
 
 ##### returns
