@@ -41,8 +41,10 @@ bucket.initBucket().then(function () {
   // We are now ready to read and write files
 
   // Watch a filename for changes
-  bucket.watchFilename('/videos/bigvid.mp4', function (err, change) {
-    console.log(change)
+  bucket.watchFilename('/videos/myVid.mp4').then(function (cursor) {
+    cursor.each((err, changes) => {
+      console.log(changes)
+    })
   })
 
   // Open a write stream to ReGrid
