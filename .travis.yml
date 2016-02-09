@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - "node"
+
+before_install:
+  - source /etc/lsb-release && echo "deb http://download.rethinkdb.com/apt $DISTRIB_CODENAME main" | sudo tee /etc/apt/sources.list.d/rethinkdb.list
+  - wget -qO- https://download.rethinkdb.com/apt/pubkey.gpg | sudo apt-key add -
+  - sudo apt-get update -qq
+  - sudo apt-get install rethinkdb
+  - sudo cp /etc/rethinkdb/default.conf.sample /etc/rethinkdb/instances.d/instance1.conf
+  - sudo /etc/init.d/rethinkdb stop
+  - sudo /etc/init.d/rethinkdb start
+
+script: npm test
