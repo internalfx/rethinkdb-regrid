@@ -3,9 +3,6 @@
 /* global describe */
 /* global it */
 /* global before */
-/* global beforeEach */
-/* global after */
-/* global afterEach */
 
 var assert = require('chai').assert
 
@@ -17,8 +14,8 @@ var Promise = require('bluebird')
 
 var r = require('rethinkdbdash')({db: 'test', silent: true})
 
-describe('createWriteStream', function () {
-  var dbfs
+describe('set()', function () {
+  var bucket
 
   before(function () {
     return co(function *() {
@@ -28,13 +25,13 @@ describe('createWriteStream', function () {
       })
       yield Promise.all(queries)
 
-      dbfs = ReGrid({db: 'test'})
-      yield dbfs.initBucket()
+      bucket = ReGrid({db: 'test'})
+      yield bucket.initBucket()
     })
   })
 
   it('should write a file correctly', function (done) {
-    var writeStream = dbfs.createWriteStream('/docs/lipsum.txt')
+    var writeStream = bucket.set('/docs/lipsum.txt')
 
     fs.createReadStream(path.join(__dirname, 'files', 'lipsum.txt')).pipe(writeStream)
 

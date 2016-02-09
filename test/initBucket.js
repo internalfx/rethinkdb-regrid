@@ -3,20 +3,16 @@
 /* global describe */
 /* global it */
 /* global before */
-/* global beforeEach */
-/* global after */
-/* global afterEach */
 
 var assert = require('chai').assert
 
 var ReGrid = require('../index')
-var fs = require('fs')
 var co = require('co')
 var Promise = require('bluebird')
 
 var r = require('rethinkdbdash')({db: 'test', silent: true})
 
-describe('initBucket', function () {
+describe('initBucket()', function () {
   before(function () {
     return co(function *() {
       var tables = yield r.tableList()

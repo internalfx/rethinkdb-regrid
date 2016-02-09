@@ -3,9 +3,6 @@
 /* global describe */
 /* global it */
 /* global before */
-/* global beforeEach */
-/* global after */
-/* global afterEach */
 
 var streamPromise = require('../lib/RGUtils').streamPromise
 var Promise = require('bluebird')
@@ -20,8 +17,8 @@ var co = require('co')
 
 var r = require('rethinkdbdash')({db: 'test', silent: true})
 
-describe('createReadStreamByFilename', function () {
-  var dbfs
+describe('getFilename()', function () {
+  var bucket
 
   before(function () {
     return co(function *() {
@@ -31,8 +28,8 @@ describe('createReadStreamByFilename', function () {
       })
       yield Promise.all(queries)
 
-      dbfs = ReGrid({db: 'test'})
-      yield dbfs.initBucket()
+      bucket = ReGrid({db: 'test'})
+      yield bucket.initBucket()
 
       var testFiles = yield fs.readdirAsync(path.join(__dirname, 'files'))
 
@@ -40,7 +37,7 @@ describe('createReadStreamByFilename', function () {
 
       testFiles.forEach(function (testFile) {
         var filename = testFile.match(/\.jpg/) ? `/images/${testFile}` : `/docs/${testFile}`
-        var stream = dbfs.createWriteStream(filename)
+        var stream = bucket.set(filename)
         uploads.push(streamPromise(stream))
         fs.createReadStream(path.join(__dirname, 'files', testFile)).pipe(stream)
       })
@@ -51,7 +48,7 @@ describe('createReadStreamByFilename', function () {
 
   it('should read a file correctly', function () {
     return co(function *() {
-      var gridStream = dbfs.createReadStreamByFilename('/images/saturnV.jpg')
+      var gridStream = bucket.getFilename('/images/saturnV.jpg')
       var fileStream = fs.createReadStream('./test/files/saturnV.jpg')
 
       var tasks = [streamPromise(gridStream), streamPromise(fileStream)]

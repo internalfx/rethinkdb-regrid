@@ -1,4 +1,4 @@
 require('./test/initBucket')
-require('./test/createWriteStream')
-require('./test/createReadStreamById')
-require('./test/createReadStreamByFilename')
+require('./test/set')
+require('./test/getId')
+require('./test/getFilename')
