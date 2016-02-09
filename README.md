@@ -380,3 +380,87 @@ bucket.listMetadata({topic: 'cats'}).toArray().then(function (catVideos) {
   console.log(catVideos)
 })
 ```
+
+---
+
+### `watchRegex(pattern)`
+
+##### Parameters
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| pattern | *required* | String | A regular expression matched against filename. |
+
+##### returns
+
+A RethinkDB [changeFeed](https://www.rethinkdb.com/api/javascript/changes/) cursor
+
+##### Description
+
+Allows you to be notified of changes to a file if the `filename` property matches your regular expression.
+
+##### Example
+
+```javascript
+bucket.watchRegex('^/videos').then(function (cursor) {
+  cursor.each((err, video) => {
+    console.log(video)
+  })
+})
+```
+
+---
+
+### `watchFilename(filename)`
+
+##### Parameters
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| filename | *required* | String | The `filename` to watch for changes. |
+
+##### returns
+
+A RethinkDB [changeFeed](https://www.rethinkdb.com/api/javascript/changes/) cursor
+
+##### Description
+
+Allows you to be notified of changes to a file if the `filename` property `===` your string.
+
+##### Example
+
+```javascript
+bucket.watchFilename('/videos/myVid.mp4').then(function (cursor) {
+  cursor.each((err, changes) => {
+    console.log(changes)
+  })
+})
+```
+
+---
+
+### `watchMetadata(metadata)`
+
+##### Parameters
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| metadata | *required* | Object | The `metadata` to watch for changes. |
+
+##### returns
+
+A RethinkDB [changeFeed](https://www.rethinkdb.com/api/javascript/changes/) cursor
+
+##### Description
+
+Allows you to be notified of changes to a file if the `metadata` property matches your object.
+
+##### Example
+
+```javascript
+bucket.watchMetadata({topic: 'cats'}).then(function (cursor) {
+  cursor.each((err, catVideoChanges) => {
+    console.log(catVideoChanges)
+  })
+})
+```
