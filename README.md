@@ -11,7 +11,7 @@ ReGrid is a method of storing large files inside a RethinkDB database.
 
 The [ReGrid spec](https://github.com/internalfx/regrid-spec) is an open specification free for anyone to implement and use.
 
-[![npm version](https://img.shields.io/npm/v/rethinkdb-regrid.svg)](https://www.npmjs.com/package/rethinkdb-regrid) [![license](https://img.shields.io/npm/l/rethinkdb-regrid.svg)](https://github.com/internalfx/regrid/blob/master/LICENSE)
+[![npm version](https://img.shields.io/npm/v/rethinkdb-regrid.svg)](https://www.npmjs.com/package/rethinkdb-regrid) [![license](https://img.shields.io/npm/l/rethinkdb-regrid.svg)](https://github.com/internalfx/regrid/blob/master/LICENSE) [![Build Status](https://travis-ci.org/internalfx/regrid.svg?branch=master)](https://travis-ci.org/internalfx/regrid)
 
 ---
 
