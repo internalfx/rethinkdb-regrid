@@ -466,3 +466,52 @@ bucket.watchMetadata({topic: 'cats'}).then(function (cursor) {
   })
 })
 ```
+
+---
+
+### `delete(fileId)`
+
+##### Parameters
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| fileId | *required* | String | The `id` of the file to retrieve |
+
+##### returns
+
+Returns a promise that resolves to a boolean, depending on whether the operation was successful.
+
+##### Description
+
+Marks a file as deleted in ReGrid
+
+##### Example
+
+```javascript
+bucket.delete('ca608825-15c0-44b5-9bef-3ccabf061bab')
+```
+
+---
+
+### `rename(file_id, filename)`
+
+##### Parameters
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| fileId | *required* | String | The `id` of the file to retrieve. |
+| filename | *required* | String | The new filename for the selected file. |
+
+##### returns
+
+Returns a promise that resolves to a boolean, depending on whether the operation was successful.
+
+##### Description
+
+Renames a file in ReGrid
+
+##### Example
+
+```javascript
+bucket.rename('ca608825-15c0-44b5-9bef-3ccabf061bab', 'newName.mp4')
+```
