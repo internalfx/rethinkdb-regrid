@@ -37,7 +37,7 @@ describe('getId()', function () {
 
       testFiles.forEach(function (testFile) {
         var filename = testFile.match(/\.jpg/) ? `/images/${testFile}` : `/docs/${testFile}`
-        var stream = bucket.set(filename)
+        var stream = bucket.upload(filename)
         uploads.push(streamPromise(stream))
         fs.createReadStream(path.join(__dirname, 'files', testFile)).pipe(stream)
       })

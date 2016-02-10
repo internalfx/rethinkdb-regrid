@@ -48,7 +48,7 @@ bucket.initBucket().then(function () {
   })
 
   // Open a write stream to ReGrid
-  var dbStream = bucket.set('/videos/bigvid.mp4')
+  var dbStream = bucket.upload('/videos/bigvid.mp4')
 
   // Create read stream from file and pipe it to a ReGrid write stream
   fs.createReadStream('./bigvid.mp4').pipe(dbStream)
@@ -69,7 +69,7 @@ There are mostly 4 types of operations that can be performed in ReGrid. Most met
 
 | Prefix | Description |
 | --- | --- |
-| set | Writes a file to ReGrid. This function will return a binary write stream. |
+| upload | Writes a file to ReGrid. This function will return a binary write stream. |
 | get | Reads a file from ReGrid. This function will return a binary read stream. |
 | list | Lists available files in ReGrid. This function will return a read stream in `objectMode`. |
 | watch | Watches files for changes in ReGrid. This function will return a [changeFeed](https://www.rethinkdb.com/api/javascript/changes/). |
@@ -135,7 +135,7 @@ bucket.initBucket().then(function () {
 
 ---
 
-### `set(filename[, options])`
+### `upload(filename[, options])`
 
 ##### Parameters
 
@@ -162,7 +162,7 @@ Returns a write stream for storing a file in ReGrid.
 ##### Example
 
 ```javascript
-var writeStream = bucket.set('/videos/myVid.mp4', {
+var writeStream = bucket.upload('/videos/myVid.mp4', {
   chunkSizeBytes: 1024 * 255,
   metadata: {topic: 'cats'}
 })

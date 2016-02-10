@@ -1,4 +1,4 @@
 require('./test/initBucket')
-require('./test/set')
+require('./test/upload')
 require('./test/getId')
 require('./test/getFilename')

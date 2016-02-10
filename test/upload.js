@@ -14,7 +14,7 @@ var Promise = require('bluebird')
 
 var r = require('rethinkdbdash')({db: 'test', silent: true})
 
-describe('set()', function () {
+describe('upload()', function () {
   var bucket
 
   before(function () {
@@ -31,7 +31,7 @@ describe('set()', function () {
   })
 
   it('should write a file correctly', function (done) {
-    var writeStream = bucket.set('/docs/lipsum.txt')
+    var writeStream = bucket.upload('/docs/lipsum.txt')
 
     fs.createReadStream(path.join(__dirname, 'files', 'lipsum.txt')).pipe(writeStream)
 
