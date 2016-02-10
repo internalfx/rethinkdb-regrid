@@ -57,7 +57,7 @@ bucket.initBucket().then(function () {
     // File is now written to the database
 
     //Read the file and pipe it to a write stream to save the file back out to the file system.
-    bucket.getFilename('/videos/bigvid.mp4').pipe(fs.createWriteStream('./copy-of-bigvid.mp4'))
+    bucket.downloadFilename('/videos/bigvid.mp4').pipe(fs.createWriteStream('./copy-of-bigvid.mp4'))
   })
 
 })
@@ -70,7 +70,7 @@ There are mostly 4 types of operations that can be performed in ReGrid. Most met
 | Prefix | Description |
 | --- | --- |
 | upload | Writes a file to ReGrid. This function will return a binary write stream. |
-| get | Reads a file from ReGrid. This function will return a binary read stream. |
+| download | Reads a file from ReGrid. This function will return a binary read stream. |
 | list | Lists available files in ReGrid. This function will return a read stream in `objectMode`. |
 | watch | Watches files for changes in ReGrid. This function will return a [changeFeed](https://www.rethinkdb.com/api/javascript/changes/). |
 
@@ -176,7 +176,7 @@ fs.createReadStream('./myVid.mp4').pipe(writeStream)
 
 ---
 
-### `getId(fileId)`
+### `downloadId(fileId)`
 
 ##### Parameters
 
@@ -195,14 +195,14 @@ Returns a read stream for reading a file from ReGrid.
 ##### Example
 
 ```javascript
-var readStream = bucket.getId('ca608825-15c0-44b5-9bef-3ccabf061bab')
+var readStream = bucket.downloadId('ca608825-15c0-44b5-9bef-3ccabf061bab')
 
 readStream.pipe(fs.createWriteStream('./mySavedVideo.mp4'))
 ```
 
 ---
 
-### `getFilename(filename[, options])`
+### `downloadFilename(filename[, options])`
 
 ##### Parameters
 
@@ -240,9 +240,9 @@ Returns a read stream for reading a file from ReGrid.
 ##### Example
 
 ```javascript
-var newestVersion = bucket.getFilename('/videos/myVid.mp4')
+var newestVersion = bucket.downloadFilename('/videos/myVid.mp4')
 
-var originalVersion = bucket.getFilename('/videos/myVid.mp4', {revision: 0})
+var originalVersion = bucket.downloadFilename('/videos/myVid.mp4', {revision: 0})
 
 newestVersion.pipe(fs.createWriteStream('./latest.mp4'))
 

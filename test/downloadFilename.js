@@ -17,7 +17,7 @@ var co = require('co')
 
 var r = require('rethinkdbdash')({db: 'test', silent: true})
 
-describe('getFilename()', function () {
+describe('downloadFilename()', function () {
   var bucket
 
   before(function () {
@@ -48,7 +48,7 @@ describe('getFilename()', function () {
 
   it('should read a file correctly', function () {
     return co(function *() {
-      var gridStream = bucket.getFilename('/images/saturnV.jpg')
+      var gridStream = bucket.downloadFilename('/images/saturnV.jpg')
       var fileStream = fs.createReadStream('./test/files/saturnV.jpg')
 
       var tasks = [streamPromise(gridStream), streamPromise(fileStream)]

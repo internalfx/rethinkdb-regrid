@@ -17,7 +17,7 @@ var co = require('co')
 
 var r = require('rethinkdbdash')({db: 'test', silent: true})
 
-describe('getId()', function () {
+describe('downloadId()', function () {
   var bucket
 
   before(function () {
@@ -50,7 +50,7 @@ describe('getId()', function () {
     return co(function *() {
       var regridFile = yield r.table('fs_files').filter({filename: '/images/saturnV.jpg'}).nth(0).run()
 
-      var gridStream = bucket.getId(regridFile.id)
+      var gridStream = bucket.downloadId(regridFile.id)
       var fileStream = fs.createReadStream('./test/files/saturnV.jpg')
 
       var tasks = [streamPromise(gridStream), streamPromise(fileStream)]
