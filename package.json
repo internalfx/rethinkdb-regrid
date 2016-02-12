@@ -18,6 +18,7 @@
   "homepage": "https://github.com/internalfx/regrid#readme",
   "dependencies": {
     "bluebird": "^3.1.5",
+    "bluebird-co": "^2.1.2",
     "co": "^4.6.0",
     "flushwritable": "^1.0.0",
     "rethinkdbdash": "^2.2.15",
