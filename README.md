@@ -267,6 +267,7 @@ originalVersion.pipe(fs.createWriteStream('./original.mp4'))
 | sort | undefined | String | Sort results by `filename`. Valid values are `ASC` and `DESC`. |
 | skip | undefined | Number | Skip results, useful for pagination. |
 | limit | undefined | Number | Limit results. |
+| showAll | false | Boolean | Show all revisions of matched files. Normally duplicate filenames are hidden and only the latest revision of each filename is returned. |
 
 ##### returns
 
