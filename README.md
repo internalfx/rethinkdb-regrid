@@ -1,5 +1,7 @@
 # ReGrid
 
+[![Join the chat at https://gitter.im/internalfx/regrid](https://badges.gitter.im/internalfx/regrid.svg)](https://gitter.im/internalfx/regrid?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![npm version](https://img.shields.io/npm/v/rethinkdb-regrid.svg)](https://www.npmjs.com/package/rethinkdb-regrid) [![license](https://img.shields.io/npm/l/rethinkdb-regrid.svg)](https://github.com/internalfx/regrid/blob/master/LICENSE) [![Build Status](https://travis-ci.org/internalfx/regrid.svg?branch=master)](https://travis-ci.org/internalfx/regrid)
 
 ReGrid is a method of storing large files inside a RethinkDB database.
