@@ -522,3 +522,28 @@ Renames a file in ReGrid
 ```javascript
 bucket.rename('ca608825-15c0-44b5-9bef-3ccabf061bab', 'newName.mp4')
 ```
+
+---
+
+### `replaceMetadata(fileId, metadata)`
+
+##### Parameters
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| fileId | *required* | String | The `id` of the file to rename. |
+| metadata | *required* | Object | The new metadata for the selected file. |
+
+##### returns
+
+Returns a promise that resolves to a boolean, depending on whether the operation was successful.
+
+##### Description
+
+Replaces a file's metadata in ReGrid
+
+##### Example
+
+```javascript
+bucket.replaceMetadata('ca608825-15c0-44b5-9bef-3ccabf061bab', {topic: 'other cat stuff'})
+```
