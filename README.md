@@ -182,13 +182,21 @@ fs.createReadStream('./myVid.mp4').pipe(writeStream)
 
 ---
 
-### `downloadId(fileId)`
+### `downloadId(fileId[, options])`
 
 ##### Parameters
 
 | key | default | type | description |
 | --- | --- | --- | --- |
 | fileId | *required* | String | The `id` of the file to retrieve |
+| options | {} | Object |  Optional parameters listed below |
+
+###### Options
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| seekStart | Null | Number | The start of the byte range. |
+| seekEnd | Null | Number | The end of the byte range. If omitted the stream will continue to the end of file. |
 
 ##### returns
 
@@ -222,6 +230,8 @@ readStream.pipe(fs.createWriteStream('./mySavedVideo.mp4'))
 | key | default | type | description |
 | --- | --- | --- | --- |
 | revision | `-1` | Number | The revision of the file to retrieve. If multiple files are uploaded under the same `filename` they are considered revisions. This may be a positive or negative number. (see chart below) |
+| seekStart | Null | Number | The start of the byte range. |
+| seekEnd | Null | Number | The end of the byte range. If omitted the stream will continue to the end of file. |
 
 ###### How revision numbers work
 
@@ -521,6 +531,30 @@ Renames a file in ReGrid
 
 ```javascript
 bucket.rename('ca608825-15c0-44b5-9bef-3ccabf061bab', 'newName.mp4')
+```
+
+---
+
+### `getMetadata(fileId)`
+
+##### Parameters
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| fileId | *required* | String | The `id` of the file to read. |
+
+##### returns
+
+Returns a promise that resolves to the file metadata.
+
+##### Description
+
+Retrieves the metadata for a given fileId.
+
+##### Example
+
+```javascript
+bucket.getMetadata('ca608825-15c0-44b5-9bef-3ccabf061bab')
 ```
 
 ---
