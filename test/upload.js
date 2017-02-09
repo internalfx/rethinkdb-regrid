@@ -30,17 +30,16 @@ describe('upload()', function () {
     })
   })
 
-  it('should write a file correctly', function (done) {
+  it('should write a file correctly', Promise.coroutine(function *(done) {
     var writeStream = bucket.upload('/docs/lipsum.txt')
 
     fs.createReadStream(path.join(__dirname, 'files', 'lipsum.txt')).pipe(writeStream)
 
-    writeStream.on('finish', function () {
-      r.table('fs_files').filter({filename: '/docs/lipsum.txt'}).nth(0).without('finishedAt', 'startedAt', 'id').default(null).run().then(function (file) {
-        file = JSON.stringify(file)
-        assert.equal(file, `{"chunkSizeBytes":261120,"filename":"/docs/lipsum.txt","length":1417,"sha256":"1748f5745c3ef44ba4e1f212069f6e90e29d61bdd320a48c0b06e1255864ed4f","status":"Complete"}`)
-        done()
-      })
-    })
-  })
+    yield Promise.fromCallback(function (cb) { writeStream.on('finish', cb) })
+
+    let file = yield r.table('fs_files').filter({filename: '/docs/lipsum.txt'}).nth(0).without('finishedAt', 'startedAt', 'id').default(null).run()
+    file = JSON.stringify(file)
+    assert.equal(file, `{"chunkSizeBytes":261120,"filename":"/docs/lipsum.txt","length":1417,"sha256":"1748f5745c3ef44ba4e1f212069f6e90e29d61bdd320a48c0b06e1255864ed4f","status":"Complete"}`)
+    // done()
+  }))
 })
