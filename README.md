@@ -97,7 +97,7 @@ There are mostly 4 types of operations that can be performed in ReGrid. Most met
 |---|---|---|---|
 | bucketName | `fs` | String | The name of the bucket. Table names are prefixed by this. |
 | chunkSizeBytes | `1024 * 255` | Number | The default chunk size, in bytes. |
-| concurrency | `10` | Number | When reading/writing a file, the number of concurrent queries in flight for a given stream. |
+| concurrency | `10` | Number | When writing a file, the number of concurrent queries in flight for a given stream. |
 
 ##### returns
 
@@ -280,7 +280,7 @@ originalVersion.pipe(fs.createWriteStream('./original.mp4'))
 
 | key | default | type | description |
 | --- | --- | --- | --- |
-| sort | undefined | String | Sort results by `filename`. Valid values are `ASC` and `DESC`. |
+| sort | 'DESC' | String | Sort results by `filename`. Valid values are `ASC` and `DESC`. |
 | skip | undefined | Number | Skip results, useful for pagination. |
 | limit | undefined | Number | Limit results. |
 | showAll | false | Boolean | Show all revisions of matched files. Normally duplicate filenames are hidden and only the latest revision of each filename is returned. |
