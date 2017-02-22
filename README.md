@@ -267,6 +267,65 @@ originalVersion.pipe(fs.createWriteStream('./original.mp4'))
 
 ---
 
+### `getFilename(filename[, options])`
+
+##### Parameters
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| filename | *required* | String | The name of the file. |
+| options | {} | Object |  Optional parameters listed below |
+
+###### Options
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| revision | `-1` | Number | The revision of the file to retrieve. If multiple files are uploaded under the same `filename` they are considered revisions. This may be a positive or negative number. (see chart below) |
+
+###### How revision numbers work
+
+If there are five versions of a file, the below chart would be the revision numbers
+
+| Number | Description |
+| --- | --- |
+| `0` or `-5` | The original file |
+| `1` or `-4` | The first revision |
+| `2` or `-3` | The second revision |
+| `3` or `-2` | The second most recent revision |
+| `4` or `-1` | The most recent revision |
+
+##### returns
+
+Promise that resolves to the files information.
+
+##### Description
+
+Returns a information for a file from ReGrid.
+
+##### Example
+
+```javascript
+bucket.getFilename('/videos/myVid.mp4', {revision: 0}).then(function (file) {
+  console.log(file)
+
+  /*
+  RETURNS
+  {
+    "chunkSizeBytes": 261120 ,
+    "filename":  "/videos/myVid.mp4" ,
+    "finishedAt": Wed Jan 11 2017 20:35:20 GMT+00:00 ,
+    "id":  "2578d295-6041-40e6-9235-d02e96c524ca" ,
+    "length": 174110 ,
+    "sha256":  "298fac8be0bdb1e48fa520dee5f510ef5f91ea0411b7584e8c62ec0cf34ce932" ,
+    "startedAt": Wed Jan 11 2017 20:35:20 GMT+00:00 ,
+    "status":  "Complete"
+  }
+  */
+})
+```
+
+---
+
 ### `listRegex(pattern[, options])`
 
 ##### Parameters
@@ -486,7 +545,7 @@ bucket.watchMetadata({topic: 'cats'}).then(function (cursor) {
 
 ---
 
-### `delete(fileId)`
+### `deleteId(fileId)`
 
 ##### Parameters
 
@@ -505,12 +564,12 @@ Marks a file as deleted in ReGrid
 ##### Example
 
 ```javascript
-bucket.delete('ca608825-15c0-44b5-9bef-3ccabf061bab')
+bucket.deleteId('ca608825-15c0-44b5-9bef-3ccabf061bab')
 ```
 
 ---
 
-### `rename(fileId, filename)`
+### `renameId(fileId, filename)`
 
 ##### Parameters
 
@@ -530,7 +589,7 @@ Renames a file in ReGrid
 ##### Example
 
 ```javascript
-bucket.rename('ca608825-15c0-44b5-9bef-3ccabf061bab', 'newName.mp4')
+bucket.renameId('ca608825-15c0-44b5-9bef-3ccabf061bab', 'newName.mp4')
 ```
 
 ---
