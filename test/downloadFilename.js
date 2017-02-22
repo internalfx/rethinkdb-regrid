@@ -13,61 +13,56 @@ var del = require('del')
 var path = require('path')
 var ReGrid = require('../index')
 var fs = Promise.promisifyAll(require('fs'))
-var co = require('co')
 
 var r = require('rethinkdbdash')({db: 'test', silent: true})
 
 describe('downloadFilename()', function () {
   var bucket
 
-  before(function () {
-    return co(function *() {
-      var tables = yield r.tableList()
-      var queries = tables.map(function (table) {
-        return r.tableDrop(table).run()
-      })
-      yield Promise.all(queries)
-
-      bucket = ReGrid({db: 'test'})
-      yield bucket.initBucket()
-
-      var testFiles = yield fs.readdirAsync(path.join(__dirname, 'files'))
-
-      var uploads = []
-
-      testFiles.forEach(function (testFile) {
-        var filename = testFile.match(/\.jpg/) ? `/images/${testFile}` : `/docs/${testFile}`
-        var stream = bucket.upload(filename)
-        uploads.push(streamPromise(stream))
-        fs.createReadStream(path.join(__dirname, 'files', testFile)).pipe(stream)
-      })
-
-      yield Promise.all(uploads)
+  before(Promise.coroutine(function *() {
+    var tables = yield r.tableList()
+    var queries = tables.map(function (table) {
+      return r.tableDrop(table).run()
     })
-  })
+    yield Promise.all(queries)
 
-  it('should read a file correctly', function () {
-    return co(function *() {
-      var gridStream = bucket.downloadFilename('/images/saturnV.jpg')
-      var fileStream = fs.createReadStream('./test/files/saturnV.jpg')
+    bucket = ReGrid({db: 'test'})
+    yield bucket.initBucket()
 
-      var tasks = [streamPromise(gridStream), streamPromise(fileStream)]
-      var gridHash = crypto.createHash('sha256')
-      var fileHash = crypto.createHash('sha256')
+    var testFiles = yield fs.readdirAsync(path.join(__dirname, 'files'))
 
-      gridStream.on('data', function (data) {
-        gridHash.update(data)
-      })
+    var uploads = []
 
-      fileStream.on('data', function (data) {
-        fileHash.update(data)
-      })
-
-      yield Promise.all(tasks)
-
-      assert.equal(fileHash.digest('hex'), gridHash.digest('hex'))
-
-      yield del('./testfile')
+    testFiles.forEach(function (testFile) {
+      var filename = testFile.match(/\.jpg/) ? `/images/${testFile}` : `/docs/${testFile}`
+      var stream = bucket.upload(filename)
+      uploads.push(streamPromise(stream))
+      fs.createReadStream(path.join(__dirname, 'files', testFile)).pipe(stream)
     })
-  })
+
+    yield Promise.all(uploads)
+  }))
+
+  it('should read a file correctly', Promise.coroutine(function *() {
+    var gridStream = bucket.downloadFilename('/images/saturnV.jpg')
+    var fileStream = fs.createReadStream('./test/files/saturnV.jpg')
+
+    var tasks = [streamPromise(gridStream), streamPromise(fileStream)]
+    var gridHash = crypto.createHash('sha256')
+    var fileHash = crypto.createHash('sha256')
+
+    gridStream.on('data', function (data) {
+      gridHash.update(data)
+    })
+
+    fileStream.on('data', function (data) {
+      fileHash.update(data)
+    })
+
+    yield Promise.all(tasks)
+
+    assert.equal(fileHash.digest('hex'), gridHash.digest('hex'))
+
+    yield del('./testfile')
+  }))
 })

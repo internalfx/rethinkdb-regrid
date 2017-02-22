@@ -9,7 +9,6 @@ var assert = require('chai').assert
 var path = require('path')
 var ReGrid = require('../index')
 var fs = require('fs')
-var co = require('co')
 var Promise = require('bluebird')
 
 var r = require('rethinkdbdash')({db: 'test', silent: true})
@@ -17,18 +16,16 @@ var r = require('rethinkdbdash')({db: 'test', silent: true})
 describe('upload()', function () {
   var bucket
 
-  before(function () {
-    return co(function *() {
-      var tables = yield r.tableList()
-      var queries = tables.map(function (table) {
-        return r.tableDrop(table).run()
-      })
-      yield Promise.all(queries)
-
-      bucket = ReGrid({db: 'test'})
-      yield bucket.initBucket()
+  before(Promise.coroutine(function *() {
+    var tables = yield r.tableList()
+    var queries = tables.map(function (table) {
+      return r.tableDrop(table).run()
     })
-  })
+    yield Promise.all(queries)
+
+    bucket = ReGrid({db: 'test'})
+    yield bucket.initBucket()
+  }))
 
   it('should write a file correctly', Promise.coroutine(function *(done) {
     var writeStream = bucket.upload('/docs/lipsum.txt')
