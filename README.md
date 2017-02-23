@@ -13,6 +13,8 @@ ReGrid is a method of storing large files inside a RethinkDB database.
 - **Fast** - Supports in-memory caching so your server doesn't fall over when something goes viral.
 - **Current** - Uses RethinkDB's changefeeds to evict cached items. ReGrid doesn't serve stale files.
 
+View the [Changelog](https://github.com/internalfx/regrid/blob/master/CHANGELOG.md)
+
 The [ReGrid spec](https://github.com/internalfx/regrid-spec) is an open specification free for anyone to implement and use.
 
 #### Need help?
