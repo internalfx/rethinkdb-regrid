@@ -9,7 +9,9 @@ ReGrid is a method of storing large files inside a RethinkDB database.
 - **Reliable** - Files are replicated across the cluster, benefiting from RethinkDB's automatic failover.
 - **Scalable** - Easily store large files in RethinkDB, distributed across the cluster.
 - **Consistent** - Sha256 hashes are calculated when the file is written, and verified when read back out.
-- **Realtime** - Watch the filesystem for changes and be notified immediately.
+- **Realtime** - Watch the file system for changes and be notified immediately.
+- **Fast** - Supports in-memory caching so your server doesn't fall over when something goes viral.
+- **Current** - Uses RethinkDB's changefeeds to evict cached items. ReGrid doesn't serve stale files.
 
 The [ReGrid spec](https://github.com/internalfx/regrid-spec) is an open specification free for anyone to implement and use.
 
@@ -97,7 +99,8 @@ There are mostly 4 types of operations that can be performed in ReGrid. Most met
 |---|---|---|---|
 | bucketName | `fs` | String | The name of the bucket. Table names are prefixed by this. |
 | chunkSizeBytes | `1024 * 255` | Number | The default chunk size, in bytes. |
-| concurrency | `10` | Number | When writing a file, the number of concurrent queries in flight for a given stream. |
+| concurrency | `10` | Number | When writing/reading a file, the number of concurrent queries in flight for a given stream. |
+| cacheSize | `400` | Number | The maximum number of objects to keep in memory. Setting to `0` will disable caching. |
 
 ##### returns
 
