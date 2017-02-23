@@ -23,10 +23,10 @@ describe('initBucket()', function () {
   describe('using defaults', function () {
     var dbfs
 
-    before(function () {
+    before(Promise.coroutine(function *() {
       dbfs = ReGrid({db: 'test'})
-      return dbfs.initBucket()
-    })
+      yield dbfs.initBucket()
+    }))
 
     it('should create correct tables', Promise.coroutine(function *() {
       var tables = yield r.tableList()
@@ -50,10 +50,10 @@ describe('initBucket()', function () {
     var dbfs
     var bucketName = Math.random().toString(36).substring(7)
 
-    before(function () {
+    before(Promise.coroutine(function *() {
       dbfs = ReGrid({db: 'test'}, {bucketName: bucketName})
-      return dbfs.initBucket()
-    })
+      yield dbfs.initBucket()
+    }))
 
     it('should create correct tables', Promise.coroutine(function *() {
       var tables = yield r.tableList()
