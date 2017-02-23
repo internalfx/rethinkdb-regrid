@@ -300,7 +300,7 @@ Promise that resolves to the files information.
 
 ##### Description
 
-Returns a information for a file from ReGrid.
+Returns information for a file from ReGrid.
 
 ##### Example
 
