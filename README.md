@@ -17,6 +17,8 @@ View the [Changelog](https://github.com/internalfx/regrid/blob/master/CHANGELOG.
 
 The [ReGrid spec](https://github.com/internalfx/regrid-spec) is an open specification free for anyone to implement and use.
 
+**The spec is very out of date**
+
 #### Need help?
 
 Join Slack [here](http://slack.rethinkdb.com/), then meet us on the [#regrid](https://rethinkdb.slack.com/messages/regrid/) channel.
@@ -33,7 +35,7 @@ Arthur Andrew Medical manufactures products with ingredients that have extensive
 
 ## Installation
 
-Supports node v4.0+
+Supports node v8.0+
 
 ```
 npm install --save rethinkdb-regrid
@@ -74,17 +76,6 @@ bucket.initBucket().then(function () {
 ```
 
 ## API Documentation
-
-There are mostly 4 types of operations that can be performed in ReGrid. Most method names start with a prefix that organizes the API.
-
-| Prefix | Description |
-| --- | --- |
-| upload | Writes a file to ReGrid. This function will return a binary write stream. |
-| download | Reads a file from ReGrid. This function will return a binary read stream. |
-| list | Lists available files in ReGrid. This function will return a read stream in `objectMode`. |
-| watch | Watches files for changes in ReGrid. This function will return a [changeFeed](https://www.rethinkdb.com/api/javascript/changes/). |
-
----
 
 ### `ReGrid([connectionOptions, options])`
 
@@ -146,21 +137,44 @@ bucket.initBucket().then(function () {
 
 ---
 
-### `upload(filename[, options])`
-
-##### Parameters
-
-| key | default | type | description |
-| --- | --- | --- | --- |
-| filename | *required* | String | The name of the file. |
-| options | {} | Object |  Optional parameters listed below |
+### `writeFile(options)`
 
 ###### Options
 
 | key | default | type | description |
 | --- | --- | --- | --- |
+| filename | *required* | String | The name of the file. |
+| buffer | *required* | Buffer | A buffer of file contents. |
 | chunkSizeBytes | The `chunkSizeBytes` setting for the bucket. | Number | Size of each chunk in bytes. |
-| metadata | undefined | Object | Metadata object allowing you to store custom keys on files. |
+| metadata | {} | Object | Metadata object allowing you to store custom keys on files. |
+
+##### returns
+
+Promise
+
+##### Description
+
+Returns a promise that resolves to the newly written file.
+
+##### Example
+
+```javascript
+let fileBuffer = fs.readFileSync('./myVid.mp4')
+
+let newFile = await bucket.writeFile({filename: '/videos/myVid.mp4', buffer: fileBuffer})
+```
+
+---
+
+### `createWriteStream(options)`
+
+###### Options
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| filename | *required* | String | The name of the file. |
+| chunkSizeBytes | The `chunkSizeBytes` setting for the bucket. | Number | Size of each chunk in bytes. |
+| metadata | {} | Object | Metadata object allowing you to store custom keys on files. |
 
 ##### returns
 
@@ -187,19 +201,85 @@ fs.createReadStream('./myVid.mp4').pipe(writeStream)
 
 ---
 
-### `downloadId(fileId[, options])`
-
-##### Parameters
-
-| key | default | type | description |
-| --- | --- | --- | --- |
-| fileId | *required* | String | The `id` of the file to retrieve |
-| options | {} | Object |  Optional parameters listed below |
+### `getFile(options)`
 
 ###### Options
 
 | key | default | type | description |
 | --- | --- | --- | --- |
+| id | Null | String | The `id` of the file to retrieve. |
+| filename | Null | String | Ignored if `id != null`. The `filename` of the file to retrieve |
+| revision | `-1` | Number | Ignored if `id != null`. The revision of the file to retrieve. If multiple files are uploaded under the same `filename` they are considered revisions. This may be a positive or negative number. (see chart below) |
+
+###### How revision numbers work
+
+If there are five versions of a file, the below chart would be the revision numbers
+
+| Number | Description |
+| --- | --- |
+| `0` or `-5` | The original file |
+| `1` or `-4` | The first revision |
+| `2` or `-3` | The second revision |
+| `3` or `-2` | The second most recent revision |
+| `4` or `-1` | The most recent revision |
+
+##### Description
+
+Returns a promise that resolves to the files information.
+
+##### Example
+
+```javascript
+let file1 = bucket.getFile({id: 'ca608825-15c0-44b5-9bef-3ccabf061bab'})
+let file2 = bucket.getFile({filename: 'catVideo.mp4', revision: 2})
+```
+
+---
+
+### `readFile(options)`
+
+###### Options
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| id | Null | String | The `id` of the file to retrieve. |
+| filename | Null | String | Ignored if `id != null`. The `filename` of the file to retrieve |
+| revision | `-1` | Number | Ignored if `id != null`. The revision of the file to retrieve. If multiple files are uploaded under the same `filename` they are considered revisions. This may be a positive or negative number. (see chart below) |
+| seekStart | Null | Number | The start of the byte range. |
+| seekEnd | Null | Number | The end of the byte range. If omitted the stream will continue to the end of file. |
+
+###### How revision numbers work
+
+If there are five versions of a file, the below chart would be the revision numbers
+
+| Number | Description |
+| --- | --- |
+| `0` or `-5` | The original file |
+| `1` or `-4` | The first revision |
+| `2` or `-3` | The second revision |
+| `3` or `-2` | The second most recent revision |
+| `4` or `-1` | The most recent revision |
+
+##### Description
+
+Returns a promise that resolves to the files information and contents.
+
+##### Example
+
+```javascript
+let file1 = bucket.readFile({id: 'ca608825-15c0-44b5-9bef-3ccabf061bab'})
+let file2 = bucket.readFile({filename: 'catVideo.mp4', revision: 2})
+```
+
+---
+
+### `createReadStream(options)`
+
+###### Options
+
+| key | default | type | description |
+| --- | --- | --- | --- |
+| id | *required* | String | The `id` of the file to retrieve |
 | seekStart | Null | Number | The start of the byte range. |
 | seekEnd | Null | Number | The end of the byte range. If omitted the stream will continue to the end of file. |
 
