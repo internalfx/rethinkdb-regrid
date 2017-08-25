@@ -1,4 +1,3 @@
 require('./test/initBucket')
-require('./test/upload')
-require('./test/downloadId')
-require('./test/downloadFilename')
+require('./test/writeFile')
+require('./test/readFile')
