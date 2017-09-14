@@ -1,3 +1,7 @@
+# 0.8.1
+
+- Bug fixes
+
 # 0.8.0
 
 #### New Features

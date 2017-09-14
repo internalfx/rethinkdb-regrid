@@ -1,6 +1,6 @@
 {
   "name": "rethinkdb-regrid",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "A file storage system for RethinkDB inspired by GridFS",
   "main": "index.js",
   "scripts": {
