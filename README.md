@@ -187,7 +187,8 @@ Returns a write stream for storing a file in ReGrid.
 ##### Example
 
 ```javascript
-var writeStream = bucket.upload('/videos/myVid.mp4', {
+var writeStream = bucket.createWriteStream({
+  filename: '/videos/myVid.mp4',
   chunkSizeBytes: 1024 * 255,
   metadata: {topic: 'cats'}
 })
@@ -294,7 +295,7 @@ Returns a read stream for reading a file from ReGrid.
 ##### Example
 
 ```javascript
-var readStream = bucket.downloadId('ca608825-15c0-44b5-9bef-3ccabf061bab')
+var readStream = bucket.createReadStream({id: 'ca608825-15c0-44b5-9bef-3ccabf061bab'})
 
 readStream.pipe(fs.createWriteStream('./mySavedVideo.mp4'))
 ```
