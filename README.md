@@ -51,27 +51,6 @@ var bucket = ReGrid({db: 'example'})
 // initBucket creates tables and indexes if they don't exist, returns a promise.
 bucket.initBucket().then(function () {
   // We are now ready to read and write files
-
-  // Watch a filename for changes
-  bucket.watchFilename('/videos/myVid.mp4').then(function (cursor) {
-    cursor.each((err, changes) => {
-      console.log(changes)
-    })
-  })
-
-  // Open a write stream to ReGrid
-  var dbStream = bucket.upload('/videos/bigvid.mp4')
-
-  // Create read stream from file and pipe it to a ReGrid write stream
-  fs.createReadStream('./bigvid.mp4').pipe(dbStream)
-
-  dbStream.on('finish', function () {
-    // File is now written to the database
-
-    //Read the file and pipe it to a write stream to save the file back out to the file system.
-    bucket.downloadFilename('/videos/bigvid.mp4').pipe(fs.createWriteStream('./copy-of-bigvid.mp4'))
-  })
-
 })
 ```
 
