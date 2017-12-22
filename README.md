@@ -507,6 +507,7 @@ bucket.watchMetadata({topic: 'cats'}).then(function (cursor) {
 | key | default | type | description |
 | --- | --- | --- | --- |
 | fileId | *required* | String | The `id` of the file to delete |
+| hard | false | Boolean | Permanently delete a file instead of just flagging |
 
 ##### returns
 
@@ -519,7 +520,7 @@ Marks a file as deleted in ReGrid
 ##### Example
 
 ```javascript
-bucket.deleteId('ca608825-15c0-44b5-9bef-3ccabf061bab')
+bucket.deleteId('ca608825-15c0-44b5-9bef-3ccabf061bab', {hard: true})
 ```
 
 ---
