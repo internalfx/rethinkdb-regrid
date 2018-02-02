@@ -4,6 +4,8 @@
 
 ReGrid is a method of storing large files inside a RethinkDB database.
 
+Using a SQL database? Try [SQLGrid](https://github.com/internalfx/sqlgrid)
+
 ### Features
 
 - **Reliable** - Files are replicated across the cluster, benefiting from RethinkDB's automatic failover.
